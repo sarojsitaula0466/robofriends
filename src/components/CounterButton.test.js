@@ -1,5 +1,6 @@
 import React from "react";
 import Adapter from "enzyme-adapter-react-16";
+import renderer from "react-test-renderer";
 import { shallow, configure } from "enzyme";
 import CounterButton from "./CounterButton";
 
@@ -7,7 +8,10 @@ configure({ adapter: new Adapter() });
 
 it("expect to render CounterComponent component", () => {
   const mockColor = "red";
-  expect(shallow(<CounterButton color={mockColor} />)).toMatchSnapshot();
+  const component = renderer
+    .create(<CounterButton color={mockColor} />)
+    .toJSON();
+  expect(component).toMatchSnapshot();
 });
 
 it("correctly increments the counter", () => {
